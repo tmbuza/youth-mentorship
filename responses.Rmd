@@ -1,0 +1,6 @@
+```{r}
+library(readr)
+survey_responses <- read_csv("survey_responses.csv")
+View(survey_responses)
+```
+
