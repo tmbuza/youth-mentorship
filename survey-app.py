@@ -22,10 +22,31 @@ if "Other (please specify)" in courses_interested:
 # Knowledge about remote work
 st.header("Knowledge about Remote Work")
 remote_work = st.radio("Are you aware of remote work opportunities?", ["Yes", "No"])
+
+# Skills needed for remote work
+st.header("Skills Needed for Remote Work")
 skills_needed = st.multiselect("What skills do you think are needed for remote work?", ["Coding", "Digital Marketing", "Graphic Design", "Writing", "Data Analysis", "Other (please specify)"])
 other_skill = ""
 if "Other (please specify)" in skills_needed:
     other_skill = st.text_input("Please specify the other skill:")
+
+# Collect information about knowledge on required skills
+st.header("Knowledge on Most Required Skills")
+required_skills = ["Coding", "Digital Marketing", "Graphic Design", "Writing", "Data Analysis"]
+skill_knowledge = {skill: st.checkbox(f"Do you know {skill}?") for skill in required_skills}
+
+# Collect information about programming languages known
+st.header("Programming Knowledge")
+programming_languages = ["R", "Python", "Shell/Bash", "Perl", "JavaScript", "Java", "C++", "Other (please specify)"]
+known_languages = st.multiselect("Which programming languages do you know?", programming_languages)
+other_language = ""
+if "Other (please specify)" in known_languages:
+    other_language = st.text_input("Please specify the other programming language:")
+
+# Collect information about challenges and aspirations
+st.header("Challenges and Aspirations")
+challenges = st.text_area("What are the biggest challenges you face in pursuing your career goals?")
+aspirations = st.text_area("What are your aspirations for the future?")
 
 # Collect additional comments
 st.header("Additional Comments")
@@ -44,6 +65,11 @@ if st.button("Submit"):
         "Remote Work Awareness": remote_work,
         "Skills Needed": ", ".join(skills_needed),
         "Other Skill": other_skill if "Other (please specify)" in skills_needed else "",
+        "Skill Knowledge": ", ".join([skill for skill, known in skill_knowledge.items() if known]),
+        "Known Programming Languages": ", ".join(known_languages),
+        "Other Programming Language": other_language if "Other (please specify)" in known_languages else "",
+        "Challenges": challenges,
+        "Aspirations": aspirations,
         "Additional Comments": additional_comments
     }
     
