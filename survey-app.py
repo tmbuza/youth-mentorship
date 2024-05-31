@@ -1,6 +1,17 @@
 import streamlit as st
 import pandas as pd
 import os
+import signal
+import psutil
+
+# Function to stop the Streamlit server
+def stop_streamlit_server():
+    current_pid = os.getpid()
+    parent_pid = psutil.Process(current_pid).ppid()
+    parent_process = psutil.Process(parent_pid)
+    for child in parent_process.children(recursive=True):
+        child.terminate()
+    parent_process.terminate()
 
 # Set the title
 st.title("Future Workforce Preparation Survey")
@@ -103,3 +114,8 @@ if st.button("Download Responses"):
             )
     else:
         st.error("No survey responses found to download.")
+
+# Add a stop button to stop the Streamlit server
+if st.button("Stop Server"):
+    stop_streamlit_server()
+    st.write("Streamlit server is stopping...")
