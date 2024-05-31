@@ -92,10 +92,14 @@ if st.button("Submit"):
 
 # Add a download button for the survey responses CSV file
 if st.button("Download Responses"):
-    with open(file_path, "rb") as file:
-        btn = st.download_button(
-            label="Download survey responses",
-            data=file,
-            file_name="survey_responses.csv",
-            mime="text/csv"
-        )
+    file_path = os.path.join(os.getcwd(), "survey_responses.csv")
+    if os.path.isfile(file_path):
+        with open(file_path, "rb") as file:
+            st.download_button(
+                label="Download survey responses",
+                data=file,
+                file_name="survey_responses.csv",
+                mime="text/csv"
+            )
+    else:
+        st.error("No survey responses found to download.")
